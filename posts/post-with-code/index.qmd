@@ -8,8 +8,11 @@ format: html
 jupyter: python3
 ---
 
-This is a post with executable code.
+# Palmerpenguins Data Analysis
 
+## 문제 : 각 펭귄 종별 특징 알아내기.
+
+-   데이터 불러오기
 
 ```{python}
 import pandas as pd
@@ -19,10 +22,22 @@ penguins.info()
 df=penguins # 편의상 df 변수 사용.
 ```
 
+-   데이터 분석을 위해 `df` 에 어떤 데이터가 있는지 확인한다.
+
 ```{python}
 df
 ```
 
+-   종과 colomm에 따른 데이터 분석
+
+1.  각 종별 서식지 분포
+2.  각 종별 테어난 연도 분포
+3.  각 종별 부리의 길이
+4.  각 종별 성별
+5.  각 종별 지느러미
+6.  각 종별 무게
+
+-   종의 종류와 개수를 파악한다.
 
 ```{python}
 # 종의 종류
@@ -33,6 +48,7 @@ num_species = df['species'].nunique()
 print(f"Species의 종류 개수: {num_species}")
 ```
 
+-   총 3개의 종의 Data Fram을 나누어 저장한다.
 
 ```{python}
 adelie = df[df['species']== 'Adelie']
@@ -40,6 +56,7 @@ chinstrap = df[df['species']== 'Chinstrap']
 gentoo = df[df['species']== 'Gentoo']
 ```
 
+### 1. 각 종별 서식지 분포
 
 ```{python}
 adelie_island_counts = adelie['island'].value_counts()
@@ -60,6 +77,53 @@ penguins_island_df
 |------------------------|-------------------------|------------------------|
 | ![Gentoo 펭귄](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2FdrTsfbfFLZ9svOAHZ0f5jXdiGvU6ap6hzdXqwon9NfcGIb-DpS68i91AMNdeZlMQGrkT2e1BJ3YMkOil4ArYuQ.webp&type=sc960_832){width="199"} | ![Chinstrap 펭귄](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi3.ruliweb.com%2Fimg%2F20%2F01%2F22%2F16fcc4abb051bbf06.jpg&type=sc960_832){width="293"} | ![Adelie 펭귄](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2Fyy9GM91w2J3gcWKiD0AxwmIWWX7lhu9LmF3KGk13rNBu1BTz72Bdu3qu62cf9Xc5sfYzT9G8c3f-8X3eDgGDZA.webp&type=sc960_832) |
 
+-   Adelie는 152마리 중 Dream에 56 마리, Torgersen에 52마리, Biscoe에 44마리 서식중이다.
+
+-   Chinstrap은 68마리 중 Dream에서만 68마리 서식중이다.
+
+-   Gentoo는 124마리 중 Biscoe 지역에서만 124마리 서식중이다.
+
+> ## 종별 서식지 대한 분석
+>
+> Adelie 펭귄은 **가장 넓은 환경에서 생존이 가능**하므로, 다양한 환경 변화에도 적응할 가능성이 높다.
+
+### 2. 각 종별 태어난 연도 분포
+
+```{python}
+adelie_year_counts = adelie['year'].value_counts()
+adelie_year_counts.name = 'Adelie_year'
+
+gentoo_year_counts = gentoo['year'].value_counts()
+gentoo_year_counts.name = 'Gentoo_year'
+
+chinstrap_year_counts = chinstrap['year'].value_counts()
+chinstrap_year_counts.name = 'Chinstrap_year'
+
+penguins_year_df = pd.concat([adelie_year_counts, gentoo_year_counts, chinstrap_year_counts], axis=1)
+penguins_year_df
+```
+
+> ## 종별 태어난 연도 분포에 대한 분석
+>
+> 2007~2009년 사이에
+>
+> Adelie는 출생 개체 수가 비슷하다. 환경적 요인의 변화가 적었던것 같다.
+>
+> Gentoo는 2007년 출생 개체 수가 가장 낮고, 다른 년도와 비교했을때 차이가 10이상으로 크다. 2007년 출생을 결정하는 환경적 요인 변화가 컸을 가능성이 있다.
+>
+> Chinstrap은 2008년 출생 개체 수가 가장 낮고, 다른 년도와 비교했을 때 차이가 크다. 2008년 출생을 결정하는 환경적인 요인 변화가 컸을 가능성이 있다.
+
+# 신인철
+
+| Gentoo 펭귄 | Chinstrap 펭귄 | Adelie 펭귄 |
+|------------------------|-------------------------|------------------------|
+| ![Gentoo 펭귄](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2FdrTsfbfFLZ9svOAHZ0f5jXdiGvU6ap6hzdXqwon9NfcGIb-DpS68i91AMNdeZlMQGrkT2e1BJ3YMkOil4ArYuQ.webp&type=sc960_832){width="199"} | ![Chinstrap 펭귄](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi3.ruliweb.com%2Fimg%2F20%2F01%2F22%2F16fcc4abb051bbf06.jpg&type=sc960_832){width="293"} | ![Adelie 펭귄](https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2Fyy9GM91w2J3gcWKiD0AxwmIWWX7lhu9LmF3KGk13rNBu1BTz72Bdu3qu62cf9Xc5sfYzT9G8c3f-8X3eDgGDZA.webp&type=sc960_832) |
+
+### 3. 각 종별 성별
+
+## bill length = 부리의길이 bill depth = 부리 깊이
+
+## 펭귄 성별에 따라 개체수 구하기
 
 ```{python}
 nan_penguins = penguins['sex'].isna().sum()
@@ -71,6 +135,7 @@ female_chinstrap = penguins.loc[(penguins['species'] == 'Chinstrap') & (penguins
 male_chinstrap = penguins.loc[(penguins['species'] == 'Chinstrap') & (penguins['sex']=="male")].shape[0]
 ```
 
+## 개체수 print함수 이용하여 정리하기
 
 ```{python}
 #각 종의 암컷, 수컷의 개체수
@@ -84,6 +149,7 @@ print("Adelie 암컷의 수 : ",female_adelie,'Adelie 수컷의 수 : ',male_ade
 | 암컷      | 73     | 58     | 34        |
 | 수컷      | 73     | 61     | 34        |
 
+## 종별 부리 깊이 구분짓기
 
 ```{python}
 #종별 구분짓기 A는 아델리
@@ -95,6 +161,7 @@ gentoo_d = gentoo.describe()
 chinstrap_d = chinstrap.describe()
 ```
 
+## .describe()이용하여 부리깊이 구하기
 
 ```{python}
 adelie_d.index = ['표본개수', '평균','표준편차','최솟값','25%','50%','75%','최대값']
@@ -114,6 +181,13 @@ gentoo_d.rename(columns={'bill_depth_mm': '부리깊이'})
 chinstrap_d.rename(columns={'bill_depth_mm': '부리깊이'})
 ```
 
+### 결론 : chinstrap 펭귄이 평균 18.42mm으로 가장 깊은 부리를 가졌고 gentoo 펭귄이 14.98mm로 가장 얕은 부리를 가졌다
+
+## 
+
+## 지느러미 및 몸무게 분석 - 신지원
+
+## 각 종별 지느러미 분석
 
 ```{python}
 gentoo = penguins[penguins['species'] == "Gentoo"] # 124개의 데이터
@@ -128,6 +202,11 @@ a_flipper_desc = adelie['flipper_length_mm'].describe()
 c_flipper_desc = chinstrap['flipper_length_mm'].describe()
 ```
 
+각 종별 describe를 평균, 최대, 최소로 나누어 구분한뒤  
+각 종별 평균, 최대, 최소를 정리하여 한 문장으로 출력되게 하였다. 
+
+각 종별 describe를 평균, 최대, 최소로 나누어 구분한뒤  
+각 종별 평균, 최대, 최소를 정리하여 한 문장으로 출력되게 하였다
 
 ```{python}
 # 평균, 최대값, 최소값 추출

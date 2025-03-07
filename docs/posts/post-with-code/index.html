@@ -9,7 +9,7 @@
 <meta name="author" content="신태선,신인철,신지원 🐧🐧🐧">
 <meta name="dcterms.date" content="2025-03-06">
 
-<title>Palmer penguins – Pfe-blog</title>
+<title>Palmer penguins – 빅데이터스쿨 Qmd 블로그</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -121,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Pfe-blog</span>
+    <span class="navbar-title">빅데이터스쿨 Qmd 블로그</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -196,8 +196,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This is a post with executable code.</p>
-<div id="73486eb5" class="cell" data-execution_count="1">
+<section id="palmerpenguins-data-analysis" class="level1">
+<h1>Palmerpenguins Data Analysis</h1>
+<section id="문제-각-펭귄-종별-특징-알아내기." class="level2">
+<h2 class="anchored" data-anchor-id="문제-각-펭귄-종별-특징-알아내기.">문제 : 각 펭귄 종별 특징 알아내기.</h2>
+<ul>
+<li>데이터 불러오기</li>
+</ul>
+<div id="87af8dd3" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> palmerpenguins <span class="im">import</span> load_penguins</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> load_penguins()</span>
@@ -221,9 +227,12 @@ dtypes: float64(4), int64(1), object(3)
 memory usage: 21.6+ KB</code></pre>
 </div>
 </div>
-<div id="6dc50e20" class="cell" data-execution_count="2">
+<ul>
+<li>데이터 분석을 위해 <code>df</code> 에 어떤 데이터가 있는지 확인한다.</li>
+</ul>
+<div id="7b120d42" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="43">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -370,7 +379,21 @@ memory usage: 21.6+ KB</code></pre>
 </div>
 </div>
 </div>
-<div id="799e3cd1" class="cell" data-execution_count="3">
+<ul>
+<li>종과 colomm에 따른 데이터 분석</li>
+</ul>
+<ol type="1">
+<li>각 종별 서식지 분포</li>
+<li>각 종별 테어난 연도 분포</li>
+<li>각 종별 부리의 길이</li>
+<li>각 종별 성별</li>
+<li>각 종별 지느러미</li>
+<li>각 종별 무게</li>
+</ol>
+<ul>
+<li>종의 종류와 개수를 파악한다.</li>
+</ul>
+<div id="849fd995" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 종의 종류</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>unique_species <span class="op">=</span> df[<span class="st">'species'</span>].unique()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Species의 종류: </span><span class="sc">{</span>unique_species<span class="sc">}</span><span class="ss">"</span>)</span>
@@ -382,12 +405,17 @@ memory usage: 21.6+ KB</code></pre>
 Species의 종류 개수: 3</code></pre>
 </div>
 </div>
-<div id="232667c8" class="cell" data-execution_count="4">
+<ul>
+<li>총 3개의 종의 Data Fram을 나누어 저장한다.</li>
+</ul>
+<div id="af3866b8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> df[df[<span class="st">'species'</span>]<span class="op">==</span> <span class="st">'Adelie'</span>]</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> df[df[<span class="st">'species'</span>]<span class="op">==</span> <span class="st">'Chinstrap'</span>]</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> df[df[<span class="st">'species'</span>]<span class="op">==</span> <span class="st">'Gentoo'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="bed52823" class="cell" data-execution_count="5">
+<section id="각-종별-서식지-분포" class="level3">
+<h3 class="anchored">1. 각 종별 서식지 분포</h3>
+<div id="60f95360" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>adelie_island_counts <span class="op">=</span> adelie[<span class="st">'island'</span>].value_counts()</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>adelie_island_counts.name <span class="op">=</span> <span class="st">'Adelie_island'</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -400,7 +428,7 @@ Species의 종류 개수: 3</code></pre>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 병합</span></span>
 <span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>penguins_island_df <span class="op">=</span> pd.concat([adelie_island_counts, chinstrap_island_counts, gentoo_island_counts], axis<span class="op">=</span><span class="dv">1</span>).fillna(<span class="dv">0</span>)</span>
 <span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>penguins_island_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="46">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div>
 
 
@@ -465,20 +493,132 @@ Species의 종류 개수: 3</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="baeedf4d" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>nan_penguins <span class="op">=</span> penguins[<span class="st">'sex'</span>].isna().<span class="bu">sum</span>()</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>female_adelie <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"female"</span>)].shape[<span class="dv">0</span>]</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>male_adelie <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"male"</span>)].shape[<span class="dv">0</span>]</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>female_gentoo <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"female"</span>)].shape[<span class="dv">0</span>]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>male_gentoo <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"male"</span>)].shape[<span class="dv">0</span>]</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>female_chinstrap <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"female"</span>)].shape[<span class="dv">0</span>]</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>male_chinstrap <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"male"</span>)].shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ul>
+<li><p>Adelie는 152마리 중 Dream에 56 마리, Torgersen에 52마리, Biscoe에 44마리 서식중이다.</p></li>
+<li><p>Chinstrap은 68마리 중 Dream에서만 68마리 서식중이다.</p></li>
+<li><p>Gentoo는 124마리 중 Biscoe 지역에서만 124마리 서식중이다.</p></li>
+</ul>
+<blockquote class="blockquote">
+<h2 id="종별-서식지-대한-분석" class="anchored" data-anchor-id="각-종별-서식지-분포">종별 서식지 대한 분석</h2>
+<p>Adelie 펭귄은 <strong>가장 넓은 환경에서 생존이 가능</strong>하므로, 다양한 환경 변화에도 적응할 가능성이 높다.</p>
+</blockquote>
+</section>
+<section id="각-종별-태어난-연도-분포" class="level3">
+<h3 class="anchored">2. 각 종별 태어난 연도 분포</h3>
+<div id="9d66db94" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>adelie_year_counts <span class="op">=</span> adelie[<span class="st">'year'</span>].value_counts()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>adelie_year_counts.name <span class="op">=</span> <span class="st">'Adelie_year'</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>gentoo_year_counts <span class="op">=</span> gentoo[<span class="st">'year'</span>].value_counts()</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>gentoo_year_counts.name <span class="op">=</span> <span class="st">'Gentoo_year'</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>chinstrap_year_counts <span class="op">=</span> chinstrap[<span class="st">'year'</span>].value_counts()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>chinstrap_year_counts.name <span class="op">=</span> <span class="st">'Chinstrap_year'</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>penguins_year_df <span class="op">=</span> pd.concat([adelie_year_counts, gentoo_year_counts, chinstrap_year_counts], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>penguins_year_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">Adelie_year</th>
+<th data-quarto-table-cell-role="th">Gentoo_year</th>
+<th data-quarto-table-cell-role="th">Chinstrap_year</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">year</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2009</td>
+<td>52</td>
+<td>44</td>
+<td>24</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2007</td>
+<td>50</td>
+<td>34</td>
+<td>26</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">2008</td>
+<td>50</td>
+<td>46</td>
+<td>18</td>
+</tr>
+</tbody>
+</table>
+
 </div>
-<div id="ce90900c" class="cell" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#각 종의 암컷, 수컷의 개체수</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Adelie 암컷의 수 : "</span>,female_adelie,<span class="st">'Adelie 수컷의 수 : '</span>,male_adelie, <span class="st">'Gentoo 암컷의 수 : '</span>,female_gentoo,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">'Gentoo 수컷의 수 : '</span>, male_gentoo, <span class="st">'Chinstrap 암컷의 수 :'</span>, female_chinstrap, <span class="st">'Chinstrap 수컷의 수 : '</span> ,male_chinstrap</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      ,<span class="st">'구별불가 펭귄의 수 : '</span>, nan_penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<blockquote class="blockquote">
+<h2 id="종별-태어난-연도-분포에-대한-분석" class="anchored" data-anchor-id="각-종별-태어난-연도-분포">종별 태어난 연도 분포에 대한 분석</h2>
+<p>2007~2009년 사이에</p>
+<p>Adelie는 출생 개체 수가 비슷하다. 환경적 요인의 변화가 적었던것 같다.</p>
+<p>Gentoo는 2007년 출생 개체 수가 가장 낮고, 다른 년도와 비교했을때 차이가 10이상으로 크다. 2007년 출생을 결정하는 환경적 요인 변화가 컸을 가능성이 있다.</p>
+<p>Chinstrap은 2008년 출생 개체 수가 가장 낮고, 다른 년도와 비교했을 때 차이가 크다. 2008년 출생을 결정하는 환경적인 요인 변화가 컸을 가능성이 있다.</p>
+</blockquote>
+</section>
+</section>
+</section>
+<section id="신인철" class="level1">
+<h1>신인철</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 32%">
+<col style="width: 34%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gentoo 펭귄</th>
+<th>Chinstrap 펭귄</th>
+<th>Adelie 펭귄</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2FdrTsfbfFLZ9svOAHZ0f5jXdiGvU6ap6hzdXqwon9NfcGIb-DpS68i91AMNdeZlMQGrkT2e1BJ3YMkOil4ArYuQ.webp&amp;type=sc960_832" class="img-fluid" width="199" alt="Gentoo 펭귄"></td>
+<td><img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi3.ruliweb.com%2Fimg%2F20%2F01%2F22%2F16fcc4abb051bbf06.jpg&amp;type=sc960_832" class="img-fluid" width="293" alt="Chinstrap 펭귄"></td>
+<td><img src="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fi.namu.wiki%2Fi%2Fyy9GM91w2J3gcWKiD0AxwmIWWX7lhu9LmF3KGk13rNBu1BTz72Bdu3qu62cf9Xc5sfYzT9G8c3f-8X3eDgGDZA.webp&amp;type=sc960_832" class="img-fluid" alt="Adelie 펭귄"></td>
+</tr>
+</tbody>
+</table>
+<section id="각-종별-성별" class="level3">
+<h3 class="anchored" data-anchor-id="각-종별-성별">3. 각 종별 성별</h3>
+</section>
+<section id="bill-length-부리의길이-bill-depth-부리-깊이" class="level2">
+<h2 class="anchored" data-anchor-id="bill-length-부리의길이-bill-depth-부리-깊이">bill length = 부리의길이 bill depth = 부리 깊이</h2>
+</section>
+<section id="펭귄-성별에-따라-개체수-구하기" class="level2">
+<h2 class="anchored" data-anchor-id="펭귄-성별에-따라-개체수-구하기">펭귄 성별에 따라 개체수 구하기</h2>
+<div id="d37b0aa0" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>nan_penguins <span class="op">=</span> penguins[<span class="st">'sex'</span>].isna().<span class="bu">sum</span>()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>female_adelie <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"female"</span>)].shape[<span class="dv">0</span>]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>male_adelie <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"male"</span>)].shape[<span class="dv">0</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>female_gentoo <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"female"</span>)].shape[<span class="dv">0</span>]</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>male_gentoo <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"male"</span>)].shape[<span class="dv">0</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>female_chinstrap <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"female"</span>)].shape[<span class="dv">0</span>]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>male_chinstrap <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>) <span class="op">&amp;</span> (penguins[<span class="st">'sex'</span>]<span class="op">==</span><span class="st">"male"</span>)].shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="개체수-print함수-이용하여-정리하기" class="level2">
+<h2 class="anchored" data-anchor-id="개체수-print함수-이용하여-정리하기">개체수 print함수 이용하여 정리하기</h2>
+<div id="182aee66" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#각 종의 암컷, 수컷의 개체수</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Adelie 암컷의 수 : "</span>,female_adelie,<span class="st">'Adelie 수컷의 수 : '</span>,male_adelie, <span class="st">'Gentoo 암컷의 수 : '</span>,female_gentoo,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      <span class="st">'Gentoo 수컷의 수 : '</span>, male_gentoo, <span class="st">'Chinstrap 암컷의 수 :'</span>, female_chinstrap, <span class="st">'Chinstrap 수컷의 수 : '</span> ,male_chinstrap</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      ,<span class="st">'구별불가 펭귄의 수 : '</span>, nan_penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Adelie 암컷의 수 :  73 Adelie 수컷의 수 :  73 Gentoo 암컷의 수 :  58 Gentoo 수컷의 수 :  61 Chinstrap 암컷의 수 : 34 Chinstrap 수컷의 수 :  34 구별불가 펭귄의 수 :  11</code></pre>
 </div>
@@ -507,23 +647,29 @@ Species의 종류 개수: 3</code></pre>
 </tr>
 </tbody>
 </table>
-<div id="8dd937e7" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#종별 구분짓기 A는 아델리</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>),[<span class="st">'bill_depth_mm'</span>]]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>),[<span class="st">'bill_depth_mm'</span>]]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>),[<span class="st">'bill_depth_mm'</span>]]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>adelie_d <span class="op">=</span>  adelie.describe()</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>gentoo_d <span class="op">=</span> gentoo.describe()</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>chinstrap_d <span class="op">=</span> chinstrap.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="종별-부리-깊이-구분짓기" class="level2">
+<h2 class="anchored" data-anchor-id="종별-부리-깊이-구분짓기">종별 부리 깊이 구분짓기</h2>
+<div id="35b77649" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#종별 구분짓기 A는 아델리</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Adelie'</span>),[<span class="st">'bill_depth_mm'</span>]]</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Gentoo'</span>),[<span class="st">'bill_depth_mm'</span>]]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> penguins.loc[(penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">'Chinstrap'</span>),[<span class="st">'bill_depth_mm'</span>]]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>adelie_d <span class="op">=</span>  adelie.describe()</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>gentoo_d <span class="op">=</span> gentoo.describe()</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>chinstrap_d <span class="op">=</span> chinstrap.describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="71929909" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>adelie_d.index <span class="op">=</span> [<span class="st">'표본개수'</span>, <span class="st">'평균'</span>,<span class="st">'표준편차'</span>,<span class="st">'최솟값'</span>,<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>,<span class="st">'최대값'</span>]</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>gentoo_d.index <span class="op">=</span> [<span class="st">'표본개수'</span>, <span class="st">'평균'</span>,<span class="st">'표준편차'</span>,<span class="st">'최솟값'</span>,<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>,<span class="st">'최대값'</span>]</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>chinstrap_d.index <span class="op">=</span> [<span class="st">'표본개수'</span>, <span class="st">'평균'</span>,<span class="st">'표준편차'</span>,<span class="st">'최솟값'</span>,<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>,<span class="st">'최대값'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="describe이용하여-부리깊이-구하기" class="level2">
+<h2 class="anchored" data-anchor-id="describe이용하여-부리깊이-구하기">.describe()이용하여 부리깊이 구하기</h2>
+<div id="6230b917" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>adelie_d.index <span class="op">=</span> [<span class="st">'표본개수'</span>, <span class="st">'평균'</span>,<span class="st">'표준편차'</span>,<span class="st">'최솟값'</span>,<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>,<span class="st">'최대값'</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>gentoo_d.index <span class="op">=</span> [<span class="st">'표본개수'</span>, <span class="st">'평균'</span>,<span class="st">'표준편차'</span>,<span class="st">'최솟값'</span>,<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>,<span class="st">'최대값'</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>chinstrap_d.index <span class="op">=</span> [<span class="st">'표본개수'</span>, <span class="st">'평균'</span>,<span class="st">'표준편차'</span>,<span class="st">'최솟값'</span>,<span class="st">'25%'</span>,<span class="st">'50%'</span>,<span class="st">'75%'</span>,<span class="st">'최대값'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e0963908" class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>adelie_d.rename(columns<span class="op">=</span>{<span class="st">'bill_depth_mm'</span>: <span class="st">'부리깊이'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="51">
+<div id="374c88ef" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>adelie_d.rename(columns<span class="op">=</span>{<span class="st">'bill_depth_mm'</span>: <span class="st">'부리깊이'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
 
@@ -573,9 +719,9 @@ Species의 종류 개수: 3</code></pre>
 </div>
 </div>
 </div>
-<div id="ad547341" class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>gentoo_d.rename(columns<span class="op">=</span>{<span class="st">'bill_depth_mm'</span>: <span class="st">'부리깊이'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div id="272e730d" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>gentoo_d.rename(columns<span class="op">=</span>{<span class="st">'bill_depth_mm'</span>: <span class="st">'부리깊이'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
 
@@ -625,9 +771,9 @@ Species의 종류 개수: 3</code></pre>
 </div>
 </div>
 </div>
-<div id="550699b3" class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>chinstrap_d.rename(columns<span class="op">=</span>{<span class="st">'bill_depth_mm'</span>: <span class="st">'부리깊이'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="53">
+<div id="84da5ca7" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>chinstrap_d.rename(columns<span class="op">=</span>{<span class="st">'bill_depth_mm'</span>: <span class="st">'부리깊이'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
@@ -677,50 +823,68 @@ Species의 종류 개수: 3</code></pre>
 </div>
 </div>
 </div>
-<div id="28516ee1" class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">"Gentoo"</span>] <span class="co"># 124개의 데이터</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>]  <span class="co"># 68개의 데이터</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">"Adelie"</span>]  <span class="co"># 152개 데이터</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="결론-chinstrap-펭귄이-평균-18.42mm으로-가장-깊은-부리를-가졌고-gentoo-펭귄이-14.98mm로-가장-얕은-부리를-가졌다" class="level3">
+<h3 class="anchored" data-anchor-id="결론-chinstrap-펭귄이-평균-18.42mm으로-가장-깊은-부리를-가졌고-gentoo-펭귄이-14.98mm로-가장-얕은-부리를-가졌다">결론 : chinstrap 펭귄이 평균 18.42mm으로 가장 깊은 부리를 가졌고 gentoo 펭귄이 14.98mm로 가장 얕은 부리를 가졌다</h3>
+</section>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section"></h2>
+</section>
+<section id="지느러미-및-몸무게-분석---신지원" class="level2">
+<h2 class="anchored" data-anchor-id="지느러미-및-몸무게-분석---신지원">지느러미 및 몸무게 분석 - 신지원</h2>
+</section>
+<section id="각-종별-지느러미-분석" class="level2">
+<h2 class="anchored" data-anchor-id="각-종별-지느러미-분석">각 종별 지느러미 분석</h2>
+<div id="442cdee0" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>gentoo <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">"Gentoo"</span>] <span class="co"># 124개의 데이터</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>chinstrap <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">"Chinstrap"</span>]  <span class="co"># 68개의 데이터</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>adelie <span class="op">=</span> penguins[penguins[<span class="st">'species'</span>] <span class="op">==</span> <span class="st">"Adelie"</span>]  <span class="co"># 152개 데이터</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="4e62530f" class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>g_flipper_desc <span class="op">=</span> gentoo[<span class="st">'flipper_length_mm'</span>].describe()</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>a_flipper_desc <span class="op">=</span> adelie[<span class="st">'flipper_length_mm'</span>].describe()</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>c_flipper_desc <span class="op">=</span> chinstrap[<span class="st">'flipper_length_mm'</span>].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="387c4621" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>g_flipper_desc <span class="op">=</span> gentoo[<span class="st">'flipper_length_mm'</span>].describe()</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>a_flipper_desc <span class="op">=</span> adelie[<span class="st">'flipper_length_mm'</span>].describe()</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>c_flipper_desc <span class="op">=</span> chinstrap[<span class="st">'flipper_length_mm'</span>].describe()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="1a4e250a" class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 평균, 최대값, 최소값 추출</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>mean_val <span class="op">=</span> g_flipper_desc[<span class="st">'mean'</span>]</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>max_val <span class="op">=</span> g_flipper_desc[<span class="st">'max'</span>]</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>min_val <span class="op">=</span> g_flipper_desc[<span class="st">'min'</span>]</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>mean_val_a <span class="op">=</span> a_flipper_desc[<span class="st">'mean'</span>]</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>max_val_a <span class="op">=</span> a_flipper_desc[<span class="st">'max'</span>]</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>min_val_a <span class="op">=</span> a_flipper_desc[<span class="st">'min'</span>]</span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>mean_val_c <span class="op">=</span> c_flipper_desc[<span class="st">'mean'</span>]</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>max_val_c <span class="op">=</span> c_flipper_desc[<span class="st">'max'</span>]</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>min_val_c <span class="op">=</span> c_flipper_desc[<span class="st">'min'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>각 종별 describe를 평균, 최대, 최소로 나누어 구분한뒤<br>
+각 종별 평균, 최대, 최소를 정리하여 한 문장으로 출력되게 하였다.</p>
+<p>각 종별 describe를 평균, 최대, 최소로 나누어 구분한뒤<br>
+각 종별 평균, 최대, 최소를 정리하여 한 문장으로 출력되게 하였다</p>
+<div id="d18423c6" class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 평균, 최대값, 최소값 추출</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mean_val <span class="op">=</span> g_flipper_desc[<span class="st">'mean'</span>]</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>max_val <span class="op">=</span> g_flipper_desc[<span class="st">'max'</span>]</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>min_val <span class="op">=</span> g_flipper_desc[<span class="st">'min'</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>mean_val_a <span class="op">=</span> a_flipper_desc[<span class="st">'mean'</span>]</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>max_val_a <span class="op">=</span> a_flipper_desc[<span class="st">'max'</span>]</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>min_val_a <span class="op">=</span> a_flipper_desc[<span class="st">'min'</span>]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>mean_val_c <span class="op">=</span> c_flipper_desc[<span class="st">'mean'</span>]</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>max_val_c <span class="op">=</span> c_flipper_desc[<span class="st">'max'</span>]</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>min_val_c <span class="op">=</span> c_flipper_desc[<span class="st">'min'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="5b7b222e" class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Gentoo의 flipper_length의 평균: </span><span class="sc">{</span>mean_val<span class="sc">}</span><span class="ss">, 최대값: </span><span class="sc">{</span>max_val<span class="sc">}</span><span class="ss">, 최소값: </span><span class="sc">{</span>min_val<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="5b089178" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Gentoo의 flipper_length의 평균: </span><span class="sc">{</span>mean_val<span class="sc">}</span><span class="ss">, 최대값: </span><span class="sc">{</span>max_val<span class="sc">}</span><span class="ss">, 최소값: </span><span class="sc">{</span>min_val<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Gentoo의 flipper_length의 평균: 217.1869918699187, 최대값: 231.0, 최소값: 203.0</code></pre>
 </div>
 </div>
-<div id="9c025b24" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Adelie의 flipper_length의 평균: </span><span class="sc">{</span>mean_val_a<span class="sc">}</span><span class="ss">, 최대값: </span><span class="sc">{</span>max_val_a<span class="sc">}</span><span class="ss">, 최소값: </span><span class="sc">{</span>min_val_a<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="19602334" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Adelie의 flipper_length의 평균: </span><span class="sc">{</span>mean_val_a<span class="sc">}</span><span class="ss">, 최대값: </span><span class="sc">{</span>max_val_a<span class="sc">}</span><span class="ss">, 최소값: </span><span class="sc">{</span>min_val_a<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Adelie의 flipper_length의 평균: 189.95364238410596, 최대값: 210.0, 최소값: 172.0</code></pre>
 </div>
 </div>
-<div id="115c8220" class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Chinstrap의 flipper_length의 평균: </span><span class="sc">{</span>mean_val_c<span class="sc">}</span><span class="ss">, 최대값: </span><span class="sc">{</span>max_val_c<span class="sc">}</span><span class="ss">, 최소값: </span><span class="sc">{</span>min_val_c<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="1cd9759f" class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Chinstrap의 flipper_length의 평균: </span><span class="sc">{</span>mean_val_c<span class="sc">}</span><span class="ss">, 최대값: </span><span class="sc">{</span>max_val_c<span class="sc">}</span><span class="ss">, 최소값: </span><span class="sc">{</span>min_val_c<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Chinstrap의 flipper_length의 평균: 195.8235294117647, 최대값: 212.0, 최소값: 178.0</code></pre>
 </div>
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
